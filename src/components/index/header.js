@@ -1,20 +1,20 @@
 import React from 'react';
+import {Link} from 'react-router'
 
 export default class IndexHeader extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            title: new Date(),
-            data: {}
+            title: new Date()
         }
     }
     componentWillMount() {
         fetch('/wxshop/base/queryAllMessages')
         .then((res)=>res.json())
         .then((data)=>{
-            console.log(data)
+            // console.log(data)
             this.setState({
-                data:data
+                data:data.data[0].title
             })
         })
         .catch((e)=>console.log(e))
@@ -45,8 +45,12 @@ export default class IndexHeader extends React.Component{
             <header>
                 <p>hello world, my type is {this.state.title.toLocaleTimeString()}</p>
                 <a href="https://www.baidu.com">百度</a>
-                <div>{this.state.data.result}</div>
-                <div>{this.state.data.data[0].title}</div>
+                <div>{this.state.data}</div>
+                <ul>
+                    <li><Link to={'/'}>首页</Link></li>
+                    <li><Link to={'/list'}>列表页</Link></li>
+                    <li><Link to={'/RouterPart'}>嵌套版块</Link></li>
+                </ul>
             </header>
         )
     }
